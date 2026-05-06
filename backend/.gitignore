@@ -1,0 +1,11 @@
+node_modules/
+client/node_modules/
+dist/
+client/dist/
+uploads/
+.env
+client/.env
+*.log
+.DS_Store
+Thumbs.db
+*.tsbuildinfo

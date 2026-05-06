@@ -1,0 +1,115 @@
+Redesign the "AI-Powered Capacity Lookup" screen for a Vietnamese cable 
+manufacturing MES system (CADIVI). The screen must fit entirely within a 
+1440×900px viewport with ZERO vertical scrolling.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 DESIGN DIRECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Style: Dark-mode dashboard, industrial & modern
+Font: Inter or DM Sans
+Color palette:
+  - Background: #0F1117
+  - Card surface: #1A1D27
+  - Accent blue: #3B82F6
+  - Success green: #22C55E
+  - Warning orange: #F59E0B
+  - No data gray: #6B7280
+  - Text primary: #F1F5F9
+  - Text secondary: #94A3B8
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 LAYOUT STRUCTURE (top → bottom, fixed height 900px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ZONE 1 — Header Bar] height: 56px
+- Left: logo icon + "Capacity Lookup" title (bold, 18px)
+- Center: Search input (compact, 480px wide, rounded-full, with search icon)
+  placeholder: "Nhập mã vật tư... VD: 53000258"
+- Right: small "Tra cứu" button (primary blue)
+- Background: #0F1117, bottom border: 1px #1E2230
+
+[ZONE 2 — Summary Strip] height: 52px
+- Single horizontal row of 4 stat chips (flex, gap-3)
+  Chip style: pill shape, bg #1A1D27, border 1px #2D3348, padding 6px 16px
+  Content per chip: icon + label (10px, gray) + value (14px bold, white)
+  Chips: "Nhà máy có data 3/4" | "Tổng số máy 6" | 
+         "Tốc độ cao nhất ⚡15 m/s" | "Máy đề xuất ★ Xoắn 54-1"
+- Right end: small "AI Insight" badge (blue glow)
+
+[ZONE 3 — AI Recommendation Bar] height: 44px
+- Single-line horizontal bar, bg: #1A1D27, border-left: 3px solid #3B82F6
+- Left: ✦ icon + text inline: 
+  "AI gợi ý: Dùng máy Xoắn 54-1 — tốc độ 15 m/s — sản lượng 15,000 kg/h 
+  — hiệu suất tối ưu nhất"
+- Right: 2 compact icon-buttons: [↓ Export] [📊 Phân tích]
+- No expand/collapse. Always visible, always one line.
+
+[ZONE 4 — Results Header Row] height: 32px
+- Left: "Kết quả: 53000258" (14px bold) + badge "3/4 plants" (green pill)
+- Right: filter dropdown "Tất cả nhà máy" (compact, 140px)
+
+[ZONE 5 — 4-Factory Grid] height: remaining (~716px flex-fill)
+- Layout: 2×2 CSS Grid, gap: 12px, padding: 0 16px 12px
+- Each factory card = equal size, fills its cell completely
+- Card style: bg #1A1D27, border-radius 10px, border 1px #2D3348
+  On hover: border #3B82F6, subtle glow
+
+  FACTORY CARD ANATOMY (compact, no wasted space):
+  ┌─────────────────────────────────────────┐
+  │ [Icon] Long Thành          ● 3 máy      │  ← header 32px
+  │ 53000173 • Cm 1.5n7x0.52               │  ← subtitle 18px
+  ├─────────────────────────────────────────┤
+  │ ┌──────────┐ ┌──────────┐ ┌──────────┐ │  ← machine row(s)
+  │ │Xoắn 54-1 │ │⚡15 m/s │ │📈15k kg/h│ │  ← 1 row per machine
+  │ │ ★ Best   │ │████░░░░ │ │████████░ │ │    height per row: ~48px
+  │ └──────────┘ └──────────┘ └──────────┘ │
+  │ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
+  │ │Xoắn 54-2 │ │⚡12 m/s │ │📈12k kg/h│ │
+  │ │ 88% eff  │ │███░░░░░ │ │███████░░ │ │
+  │ └──────────┘ └──────────┘ └──────────┘ │
+  └─────────────────────────────────────────┘
+
+  Machine row rules:
+  - Name: 12px semibold, truncate if long
+  - Speed & output: shown as "value unit" in 13px bold + mini bar below (4px height)
+  - Efficiency badge: top-right corner of name cell, pill: green/orange/red by value
+  - Best machine: highlighted with blue left-border on the row
+  - If ≥3 machines: show first 2 + "+(N) máy khác" collapsed link at bottom
+
+  NO-DATA card variant:
+  - Same card shell, but center content: 
+    ⚠ icon (24px, orange) + "Chưa có dữ liệu" (13px, orange)
+  - 2 small buttons: [Ghi nhận] [Xem request] — compact, ghost style
+  - No large illustration/icon wasting space
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📏 SPACING RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Base unit: 4px grid
+- Card internal padding: 12px
+- No decorative whitespace — every pixel carries data or structure
+- Progress bars: height 4px, border-radius 2px, width 100%
+- Icons: 14–16px only, no large hero icons
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚫 REMOVE FROM CURRENT DESIGN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Large blue gradient hero header (wastes ~180px)
+- Full-width yellow "Điện trở do" warning block
+- Oversized factory icon avatars (48px → reduce to 24px)
+- Verbose subtitle text below AI recommendation
+- Separate full-width AI Recommendation card section
+- Any element requiring vertical scroll on 1440×900 screen
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ MUST-HAVE UX RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- All 4 factories visible simultaneously, no scroll
+- Best machine visually distinct at a glance (star + blue accent)
+- No-data factory immediately recognizable (orange tint on card border)
+- Efficiency color logic: ≥90% green / 75–89% orange / <75% red
+- Information hierarchy: Factory name → Machine name → Speed → Output
+- Responsive to 1280px wide minimum
+
+Deliverable: Full Figma frame at 1440×900, auto-layout, 
+component-based (Factory Card, Machine Row, Stat Chip as components).

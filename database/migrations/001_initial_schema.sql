@@ -1,0 +1,6 @@
+-- Migration 001 — initial schema
+--
+-- Toàn bộ DDL PostgreSQL nằm tại: db/schema.sql
+-- (file này giữ số thứ tự migration; migrate.ts nạp ../schema.sql)
+--
+-- Chạy tay:  psql -U postgres -d <database> -f db/schema.sql

@@ -1,0 +1,15 @@
+{
+  "name": "app-truy-van-btp-tp",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:frontend": "npm --prefix frontend run dev:ui",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build && npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "build:backend": "npm --prefix backend run build",
+    "migrate": "npm --prefix backend run migrate",
+    "seed": "npm --prefix backend run seed"
+  }
+}

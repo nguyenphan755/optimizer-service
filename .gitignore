@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build & cache
+dist/
+**/dist/
+*.tsbuildinfo
+.vite/
+
+# Env & secrets (giữ .env.example)
+.env
+.env.local
+.env.*.local
+**/.env
+!**/.env.example
+
+# Uploads & generated
+uploads/
+**/uploads/
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+.cursor/
+
+# Too-long paths from reference exports (Windows)
+docs/architecture/frontend-reference/figma-export/
+**/figma-export/
+
+# Large local CSV / exports (bỏ comment nếu muốn commit)
+# *.csv
